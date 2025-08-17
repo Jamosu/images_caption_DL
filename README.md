@@ -68,6 +68,6 @@ Hệ thống kết hợp:
 ## 🖼️ Ví dụ  
 
 ### Input  
-<img src="TestImage.png" width="800"/>  
-
+<img src="Screenshot 2025-05-05 142134.png" width="800"/>  
 ### Output Caption  
+<img src="TestImage.png" width="800"/>  
