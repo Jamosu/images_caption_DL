@@ -1,56 +1,73 @@
-📌 Image Captioning with ViT + GPT-2
-1. Bài toán
+# 🖼️ Image Captioning with ViT + GPT-2  
 
-Sinh chú thích ảnh (Image Captioning): cho một ảnh đầu vào, mô hình sinh ra một câu mô tả bằng tiếng Anh.
+## 🔍 Giới thiệu  
 
-Encoder: Vision Transformer (ViT) để trích xuất đặc trưng hình ảnh.
+Dự án này xây dựng một mô hình **Deep Learning** có khả năng sinh chú thích ảnh (**Image Captioning**) bằng tiếng Anh.  
+Hệ thống kết hợp:  
 
-Decoder: GPT-2 để sinh câu mô tả tự nhiên, mạch lạc.
+- **Vision Transformer (ViT)** 👉 trích xuất đặc trưng ảnh.  
+- **GPT-2** 👉 sinh câu mô tả tự nhiên.  
+- **Framework**: Hugging Face `transformers` + PyTorch.  
+- **Dataset**: Flickr8k (ảnh + caption tiếng Anh).  
 
-Kiến trúc: Encoder–Decoder dựa trên VisionEncoderDecoderModel của Hugging Face.
+---
 
-Dữ liệu huấn luyện: Flickr8k (mỗi ảnh có 1–5 caption tiếng Anh).
+## 👨‍🏫 Thành viên  
 
-2. Dữ liệu & Tiền xử lý
+| Họ và Tên       | MSSV      |
+|-----------------|-----------|
+| Châu Tiểu Long  | 21094341  |
 
-Ảnh: resize về (224,224), chuyển tensor, chuẩn hóa (mean=0.5, std=0.5), trích đặc trưng bằng ViTFeatureExtractor.
+**GV hướng dẫn:** ...  
+**Trường:** Đại học Công Nghiệp TP.HCM  
 
-Chú thích: tokenize bằng GPT-2 tokenizer, pad đến max_length=50, bỏ qua token pad trong loss.
+---
 
-Chia dữ liệu: Train 80% – Val 20%.
+## 🎯 Mục tiêu  
 
-3. Huấn luyện
+- Xây dựng mô hình sinh chú thích ảnh.  
+- Ứng dụng Vision Transformer thay CNN để tăng hiệu quả trích xuất ảnh.  
+- Sử dụng GPT-2 để tạo caption mượt mà và đúng ngữ nghĩa.  
+- Đánh giá chất lượng bằng độ tương đồng với caption gốc.  
 
-Mô hình: VisionEncoderDecoderModel.from_encoder_decoder_pretrained()
+---
 
-Tham số sinh caption:
+## 🧰 Công nghệ & thư viện sử dụng  
 
-max_length=128, num_beams=4, no_repeat_ngram_size=3, length_penalty=2.0.
+- **Python, PyTorch, Hugging Face Transformers**  
+- **PIL, torchvision** (tiền xử lý ảnh)  
+- **Seq2SeqTrainer** (huấn luyện Encoder–Decoder)  
 
-Cấu hình huấn luyện (Seq2SeqTrainer):
+---
 
-Epochs: 3
+## 🖥️ Kiến trúc mô hình  
 
-Batch size: 8
+### 🔧 Cấu trúc Encoder–Decoder  
 
-Learning rate: 5e-5
+- **Encoder**: Vision Transformer (ViT) – chia ảnh thành patch, trích xuất đặc trưng toàn cục.  
+- **Decoder**: GPT-2 – sinh văn bản mô tả.  
+- **Huấn luyện**: `VisionEncoderDecoderModel.from_encoder_decoder_pretrained()`  
 
-Warmup steps: 1024
+### 📐 Cấu hình huấn luyện  
 
-Evaluation: theo từng epoch
+- Epochs: 3  
+- Batch size: 8  
+- Learning rate: 5e-5  
+- Max caption length: 128  
+- Beam search: 4  
 
-Lưu duy nhất mô hình tốt nhất (save_total_limit=1).
+---
 
-4. Kết quả
+## 📊 Kết quả  
 
-Similarity score: ~0.38
+- **Similarity score**: ~ **0.38**  
+- Caption sinh ra ngữ nghĩa gần đúng và ngữ pháp tự nhiên.  
 
-Mô hình sinh caption có ý nghĩa gần giống so với ground-truth, ngữ pháp tự nhiên.
+---
 
-5. Lý do chọn ViT + GPT-2
+## 🖼️ Ví dụ  
 
-ViT: trích xuất quan hệ không gian toàn cục tốt hơn CNN.
+### Input  
+<img src="images/sample_input.jpg" width="400"/>  
 
-GPT-2: sinh ngôn ngữ mượt mà, có ngữ nghĩa tốt.
-
-Hugging Face: dễ triển khai, tái sử dụng và tinh chỉnh.
+### Output Caption  
